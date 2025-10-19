@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Expensify{% endblock %}
+
+{% block content %}
+<div class="min-h-screen">
+    <!-- Header -->
+    <header class="card border-b sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <i data-lucide="dollar-sign" class="text-white w-6 h-6"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-blue-600">Expensify</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm" style="color: var(--text-secondary)">{{ current_user.name }}</span>
+                <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <i data-lucide="moon" class="w-5 h-5"></i>
+                </button>
+                <a href="{{ url_for('logout') }}" class="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="card w-64 min-h-screen border-r p-4 hidden lg:block">
+            <nav class="space-y-2">
+                <a href="{{ url_for('dashboard') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ url_for('expenses') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">
+                    <i data-lucide="receipt" class="w-5 h-5"></i>
+                    <span>Expenses</span>
+                </a>
+                <a href="{{ url_for('learn') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <span>Learn</span>
+                </a>
+                <a href="{{ url_for('settings') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <h2 class="text-3xl font-bold mb-6">Settings</h2>
+            
+            <div class="space-y-6">
+                <!-- Profile Section -->
+                <div class="card rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">User Profile</h3>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="update_profile">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Full Name</label>
+                                <input type="text" name="name" value="{{ current_user.name }}"
+                                    class="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none"
+                                    style="background-color: var(--bg-secondary); border-color: var(--border-color)">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" value="{{ current_user.email }}" disabled
+                                    class="w-full px-4 py-2 rounded-lg border opacity-60"
+                                    style="background-color: var(--bg-secondary); border-color: var(--border-color)">
+                            </div>
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                                Update Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notifications -->
+                <div class="card rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Notification Preferences</h3>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="update_notifications">
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="budget_alerts" {% if user_settings.budget_alerts %}checked{% endif %} class="w-5 h-5 text-blue-600 rounded">
+                                <span>Budget Overrun Alerts</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="weekly_summary" {% if user_settings.weekly_summary %}checked{% endif %} class="w-5 h-5 text-blue-600 rounded">
+                                <span>Weekly Financial Summary</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="security_alerts" {% if user_settings.security_alerts %}checked{% endif %} class="w-5 h-5 text-blue-600 rounded">
+                                <span>Security Alerts</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                            Save Preferences
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Security -->
+                <div class="card rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Security & Access</h3>
+                    <div class="space-y-3">
+                        <button onclick="alert('Password change feature coming soon!')"
+                            class="w-full text-left px-4 py-3 rounded-lg border hover:bg-blue-50 dark:hover:bg-blue-900/20 transition"
+                            style="border-color: var(--border-color)">
+                            <div class="flex items-center justify-between">
+                                <span>Change Password</span>
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </div>
+                        </button>
+                        <button onclick="alert('Two-factor authentication enabled!')"
+                            class="w-full text-left px-4 py-3 rounded-lg border hover:bg-blue-50 dark:hover:bg-blue-900/20 transition"
+                            style="border-color: var(--border-color)">
+                            <div class="flex items-center justify-between">
+                                <span>Enable Two-Factor Auth</span>
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="card rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Data Management</h3>
+                    <a href="{{ url_for('export_data') }}"
+                        class="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition flex items-center justify-center space-x-2">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                        <span>Export Financial Data to CSV</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const icon = document.querySelector('#themeToggle i');
+        icon.setAttribute('data-lucide', document.documentElement.classList.contains('dark') ? 'sun' : 'moon');
+        lucide.createIcons();
+    });
+</script>
+{% endblock %}

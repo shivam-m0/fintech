@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Expensify{% endblock %}
+
+{% block content %}
+<div class="min-h-screen">
+    <!-- Header -->
+    <header class="card border-b sticky top-0 z-40">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <i data-lucide="indian-rupee" class="text-white w-6 h-6"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-blue-600">Expensify</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm" style="color: var(--text-secondary)">{{ current_user.name }}</span>
+                <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <i data-lucide="moon" class="w-5 h-5"></i>
+                </button>
+                <a href="{{ url_for('logout') }}" class="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="card w-64 min-h-screen border-r p-4 hidden lg:block">
+            <nav class="space-y-2">
+                <a href="{{ url_for('dashboard') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ url_for('expenses') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">
+                    <i data-lucide="receipt" class="w-5 h-5"></i>
+                    <span>Expenses</span>
+                </a>
+                <a href="{{ url_for('learn') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <span>Learn</span>
+                </a>
+                <a href="{{ url_for('settings') }}" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <h2 class="text-3xl font-bold mb-6">Financial Overview</h2>
+            
+            <!-- Metric Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="card rounded-xl p-6 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <span style="color: var(--text-secondary)" class="text-sm">Current Balance</span>
+                        <i data-lucide="wallet" class="w-5 h-5 text-blue-500"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-blue-600">₹{{ "%.2f"|format(current_balance) }}</p>
+                </div>
+                <div class="card rounded-xl p-6 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <span style="color: var(--text-secondary)" class="text-sm">Monthly Spending</span>
+                        <i data-lucide="trending-down" class="w-5 h-5 text-red-500"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-red-600">₹{{ "%.2f"|format(monthly_spending) }}</p>
+                </div>
+                <div class="card rounded-xl p-6 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <span style="color: var(--text-secondary)" class="text-sm">Savings Goal</span>
+                        <i data-lucide="target" class="w-5 h-5 text-teal-500"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-teal-600">{{ "%.0f"|format(savings_goal * 100) }}%</p>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="card rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Monthly Spending Breakdown</h3>
+                    <canvas id="spendingChart"></canvas>
+                </div>
+                <div class="card rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Financial History</h3>
+                    <canvas id="historyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="card rounded-xl p-6 shadow-md">
+                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                    <i data-lucide="sparkles" class="w-5 h-5 mr-2 text-yellow-500"></i>
+                    AI Insights
+                </h3>
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4">
+                    <p class="text-sm">You're spending 15% more on dining out compared to last month. Consider meal prepping to save ₹200/month.</p>
+                </div>
+                <div class="h-32 bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white">
+                    <p class="text-sm">Your spending vs National Average comparison chart</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    // Initialize charts
+    fetch('/api/dashboard_data')
+        .then(res => res.json())
+        .then(data => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+            
+            // Spending Chart
+            const spendingCtx = document.getElementById('spendingChart');
+            new Chart(spendingCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data.categories),
+                    datasets: [{
+                        data: Object.values(data.categories),
+                        backgroundColor: ['#fb923c', '#a855f7', '#3b82f6', '#ec4899', '#14b8a6', '#6b7280']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: textColor }
+                        }
+                    }
+                }
+            });
+            
+            // History Chart
+            const historyCtx = document.getElementById('historyChart');
+            new Chart(historyCtx, {
+                type: 'line',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            label: 'Earnings',
+                            data: data.earnings,
+                            borderColor: '#14b8a6',
+                            backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Spending',
+                            data: data.spending,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Savings',
+                            data: data.savings,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: textColor }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: textColor },
+                            grid: { color: gridColor }
+                        },
+                        x: {
+                            ticks: { color: textColor },
+                            grid: { color: gridColor }
+                        }
+                    }
+                }
+            });
+        });
+    
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const icon = document.querySelector('#themeToggle i');
+        icon.setAttribute('data-lucide', document.documentElement.classList.contains('dark') ? 'sun' : 'moon');
+        lucide.createIcons();
+        location.reload(); // Reload to update charts
+    });
+</script>
+{% endblock %}

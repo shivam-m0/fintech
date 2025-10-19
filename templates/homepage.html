@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expensify - Smart Money. Smarter You.</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import Inter font for a modern, professional look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8f9fa; /* Light background matching the image */
+            color: #343a40; /* Darker text for readability */
+        }
+        /* Define a subtle primary color for accents: BLUE */
+        .primary-color {
+            color: #2196F3; /* A professional blue */
+        }
+        .primary-bg {
+            background-color: #2196F3;
+        }
+        .primary-border {
+            border-color: #2196F3;
+        }
+        .shadow-custom {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .shadow-lg-custom {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header & Navigation --><header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo --><a href="#" class="text-2xl font-bold flex items-center">
+                <span class="primary-color">Expen</span>sify
+                <span class="text-gray-500 text-sm ml-2 font-normal">Smart Money. Smarter You.</span>
+            </a>
+
+            <!-- Desktop Links --><div class="hidden md:flex space-x-8 text-sm font-medium text-gray-700">
+                <a href="#features" class="hover:primary-color transition duration-300">Features</a>
+                <a href="about.html" class="hover:primary-color transition duration-300">About Us</a>
+                <a href="#networth-demo" class="hover:primary-color transition duration-300">Demo</a>
+                <a href="#contact" class="hover:primary-color transition duration-300">Contact</a>
+            </div>
+
+            <!-- Auth Buttons --><div class="hidden md:flex space-x-3">
+                <button class="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:primary-border hover:primary-color transition duration-300 shadow-sm">
+                    Log In
+                </button>
+                <button class="px-4 py-2 text-sm font-semibold text-white primary-bg rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+                    Sign Up Free
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button (Hamburger) --><button id="menu-button" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) --><div id="mobile-menu" class="hidden md:hidden absolute w-full bg-white shadow-lg transition duration-300 ease-in-out">
+            <div class="flex flex-col space-y-4 p-4 border-t border-gray-200">
+                <a href="#features" class="block py-2 text-gray-700 hover:primary-color transition duration-300">Features</a>
+                <a href="about.html" class="block py-2 text-gray-700 hover:primary-color transition duration-300">About Us</a>
+                <a href="#networth-demo" class="block py-2 text-gray-700 hover:primary-color transition duration-300">Demo</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:primary-color transition duration-300">Contact</a>
+                <button class="w-full py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:primary-border hover:primary-color transition duration-300 shadow-sm">Log In</button>
+                <button class="w-full py-2 text-sm font-semibold text-white primary-bg rounded-lg shadow-md hover:bg-blue-600 transition duration-300">Sign Up Free</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section --><section id="hero" class="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-gray-900">
+                Manage Your Money. <br> Live <span class="primary-color">Smarter.</span>
+            </h1>
+            <p class="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+                Expensify provides intuitive tools for tracking expenses, setting budgets, and achieving your financial goals with ease.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="login.html" class="px-8 py-4 text-lg font-bold text-white primary-bg rounded-xl shadow-lg-custom hover:bg-blue-600 transition duration-300 transform hover:scale-105">
+                    Get Started Free
+                </a>
+                <a href="#networth-demo" class="px-8 py-4 text-lg font-bold text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition duration-300 transform hover:scale-105 shadow-custom">
+                    Try the Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Net Worth Comparator Demo Section (New Feature) --><section id="networth-demo" class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white rounded-2xl shadow-lg-custom mb-24 border border-gray-200">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">
+                Where Do You Stand?
+            </h2>
+            <p class="text-gray-600 mb-8">
+                **Demo Feature:** Enter your estimated net worth (in thousands of dollars) to see your simulated percentile ranking in the country.
+            </p>
+
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center items-center">
+                <div class="relative w-full sm:w-1/2">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 font-bold">₹K</span>
+                    <input type="number" id="networth-input" min="0" placeholder="100" class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:border-primary-color focus:ring-1 focus:ring-primary-color transition duration-300 shadow-custom text-lg" value="100">
+                </div>
+                <button id="calculate-button" class="w-full sm:w-auto px-8 py-3 text-lg font-bold text-white primary-bg rounded-xl hover:bg-blue-600 transition duration-300 transform hover:scale-[1.02]">
+                    Calculate Rank
+                </button>
+            </div>
+
+            <!-- Result Display Area -->
+            <div id="result-display" class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200 text-xl font-semibold text-gray-700 hidden">
+                <!-- Content injected by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    </section>
+
+    <!-- Features Section --><section id="features" class="py-24 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-extrabold text-center mb-4 text-gray-900">
+                All the Tools You Need for <span class="primary-color">Financial Peace</span>
+            </h2>
+            <p class="text-center text-gray-600 mb-16 max-w-2xl mx-auto">
+                Our platform empowers you to take control of your money, effortlessly.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature Card 1: Expense Tracking --><div class="bg-white p-8 rounded-2xl shadow-custom border border-gray-200 transition duration-300 hover:shadow-lg-custom">
+                    <div class="primary-color mb-4">
+                        <!-- Icon: Document/Clipboard --><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Effortless Expense Tracking</h3>
+                    <p class="text-gray-600">
+                        Automatically categorize your spending, link all your accounts, and see where every dollar goes.
+                    </p>
+                </div>
+
+                <!-- Feature Card 2: Budgeting --><div class="bg-white p-8 rounded-2xl shadow-custom border border-gray-200 transition duration-300 hover:shadow-lg-custom">
+                    <div class="primary-color mb-4">
+                        <!-- Icon: Piggy Bank/Coins --><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 15.121A4 4 0 0110.879 12H8.25V9.75A.75.75 0 007.5 9h-1.5A.75.75 0 005.25 9.75v3.621A4.004 4.004 0 0112 16.121v-4.5h2.121zM5.25 15.75H4.5A.75.75 0 003.75 16.5v1.5c0 .414.336.75.75.75h.75a.75.75 0 00.75-.75v-1.5a.75.75 0 00-.75-.75zm0-6H4.5A.75.75 0 003.75 10.5v1.5c0 .414.336.75.75.75h.75a.75.75 0 00.75-.75v-1.5a.75.75 0 00-.75-.75zm12 0h-.75a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75h.75a.75.75 0 00.75-.75v-1.5a.75.75 0 00-.75-.75zm-6 0h-.75a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75h.75a.75.75 0 00.75-.75v-1.5a.75.75 0 00-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Smart Budgeting & Savings Goals</h3>
+                    <p class="text-gray-600">
+                        Set realistic budgets, track progress towards savings goals, and get smart insights to stay on track.
+                    </p>
+                </div>
+
+                <!-- Feature Card 3: Personalized Insights --><div class="bg-white p-8 rounded-2xl shadow-custom border border-gray-200 transition duration-300 hover:shadow-lg-custom">
+                    <div class="primary-color mb-4">
+                        <!-- Icon: Lightbulb/Idea --><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 17v5m6.447-19.447L13.121 5.121a3 3 0 01-4.242 0L5.553 1H5a2 2 0 00-2 2v1c0 1.105.895 2 2 2h14c1.105 0 2-.895 2-2V3a2 2 0 00-2-2h-.553z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">AI-Powered Financial Insights</h3>
+                    <p class="text-gray-600">
+                        Receive personalized tips and advice from our AI chatbot to optimize your spending and investing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data & Trust Section --><section id="stats" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900">Trusted by Thousands. <br> Powered by Intelligence.</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <!-- Stat 1 --><div class="p-4">
+                    <p class="primary-color text-5xl font-bold">4.9</p>
+                    <p class="mt-2 text-gray-600 text-sm">App Store Rating</p>
+                </div>
+                <!-- Stat 2 --><div class="p-4">
+                    <p class="primary-color text-5xl font-bold">1M+</p>
+                    <p class="mt-2 text-gray-600 text-sm">Users Worldwide</p>
+                </div>
+                <!-- Stat 3 --><div class="p-4">
+                    <p class="primary-color text-5xl font-bold">30%</p>
+                    <p class="mt-2 text-gray-600 text-sm">Average Savings Increase</p>
+                </div>
+                <!-- Stat 4 --><div class="p-4">
+                    <p class="primary-color text-5xl font-bold">256-bit</p>
+                    <p class="mt-2 text-gray-600 text-sm">Data Encryption</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section --><section id="contact" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="primary-bg p-8 md:p-16 rounded-3xl text-center shadow-lg-custom">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">
+                    Start Your Journey to Financial Freedom.
+                </h2>
+                <p class="mt-4 text-white/90 text-lg">
+                    Join Expensify today and make smarter financial decisions every day.
+                </p>
+                <a href="login.html" class="mt-8 inline-block px-10 py-4 text-lg font-bold text-blue-700 bg-white rounded-xl shadow-md hover:bg-gray-100 transition duration-300 transform hover:scale-105">
+                    Open Your Free Account
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer --><footer class="bg-white border-t border-gray-200 mt-16 pt-12 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Column 1: Logo & Mission --><div>
+                    <a href="#" class="text-xl font-bold flex items-center mb-4">
+                        <span class="primary-color">Expen</span>sify
+                        <span class="text-gray-500 text-sm ml-2 font-normal">Smart Money. Smarter You.</span>
+                    </a>
+                    <p class="text-sm text-gray-600">
+                        Empowering individuals to achieve financial well-being through intelligent and intuitive tools.
+                    </p>
+                </div>
+
+                <!-- Column 2: Products --><div>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Products</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:primary-color">Expense Tracker</a></li>
+                        <li><a href="#" class="hover:primary-color">Budget Planner</a></li>
+                        <li><a href="#" class="hover:primary-color">Savings Goals</a></li>
+                        <li><a href="#" class="hover:primary-color">Financial Insights</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Company --><div>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="about.html" class="hover:primary-color">About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Support --><div>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:primary-color">Help Center</a></li>
+                        <li><a href="#" class="hover:primary-color">NUMBER/email</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
+                &copy; 2025 Expensify, Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for toggling the mobile menu
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+        menuButton.addEventListener('click', toggleMenu);
+
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // --- Net Worth Comparator Demo Logic ---
+        const netWorthInput = document.getElementById('networth-input');
+        const calculateButton = document.getElementById('calculate-button');
+        const resultDisplay = document.getElementById('result-display');
+
+        // This function simulates the percentile ranking based on net worth (in thousands of dollars).
+        // It is a client-side demo and does not use real-world financial data.
+        function calculatePercentile(netWorthK) {
+            const netWorth = netWorthK; // Input is already in thousands (K), so no need to multiply by 1000 again.
+            let percentile;
+
+            if (netWorth < 0) {
+                // High debt / Negative net worth
+                percentile = 1;
+            } else if (netWorth < 100) {
+                // < ₹1 Lakh
+                percentile = 10 + Math.floor((netWorth / 100) * 10); // up to 20%
+            } else if (netWorth < 1000) {
+                // ₹1 Lakh to ₹10 Lakhs
+                // Range size: 900 ₹K. Percentile range: 20% to 50% (30 points)
+                percentile = 20 + Math.floor(((netWorth - 100) / 900) * 30); // up to 50%
+            } else if (netWorth < 5000) {
+                // ₹10 Lakhs to ₹50 Lakhs
+                // Range size: 4000 ₹K. Percentile range: 50% to 85% (35 points)
+                percentile = 50 + Math.floor(((netWorth - 1000) / 4000) * 35); // up to 85%
+            } else if (netWorth < 15000) {
+                // ₹50 Lakhs to ₹1.5 Crore
+                // Range size: 10000 ₹K. Percentile range: 85% to 95% (10 points)
+                percentile = 85 + Math.floor(((netWorth - 5000) / 10000) * 10); // up to 95%
+            } else if (netWorth < 100000) {
+                // ₹1.5 Crores to ₹10 Crores
+                // Range size: 85000 ₹K. Percentile range: 95% to 99% (4 points)
+                percentile = 95 + Math.floor(((netWorth - 15000) / 85000) * 4); // up to 99%
+            } else {
+                // >= ₹10 Crores (Top 1%)
+                percentile = 99; 
+            }
+            
+            // Ensure the return value is a whole number between 1 and 99.
+            return Math.min(99, Math.max(1, percentile));
+        }
+
+        function handleCalculation() {
+            const netWorthK = parseFloat(netWorthInput.value);
+
+            // Basic validation
+            if (isNaN(netWorthK) || netWorthK < 0) {
+                resultDisplay.classList.remove('hidden');
+                resultDisplay.innerHTML = '<span class="text-red-500">Please enter a valid net worth amount.</span>';
+                return;
+            }
+
+            const percentile = calculatePercentile(netWorthK);
+
+            const netWorthINR = netWorthK.toLocaleString('en-US', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+
+            // Set the result message
+            resultDisplay.innerHTML = `
+                Your estimated net worth of <strong class="primary-color">₹{netWorthINR}K</strong> is
+                <span class="text-2xl font-extrabold primary-color">
+                    in the top ₹{percentile}%
+                </span>
+                of households in the country (Simulated data).
+            `;
+            
+            resultDisplay.classList.remove('hidden');
+        }
+
+        // Attach event listener
+        calculateButton.addEventListener('click', handleCalculation);
+
+        // Run calculation on load for initial value
+        window.addEventListener('load', handleCalculation); 
+    </script>
+</body>
+</html>
